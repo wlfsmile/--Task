@@ -57,7 +57,7 @@
      * 返回一个排序后的数组
      */
     function sortAqiData(data) {
-        data.sort((a, b) => a[1] - b[1] ? -1 : 1);
+        data.sort((a, b) => a[1] - b[1] ? 1 : -1);
         return data;
     }
 
@@ -68,10 +68,11 @@
      */
     function render(data) {
         var str = '';
-        var len = data.length;
-        for(var i=0;i<len;i++){
-            var n = i+1;
+        var len = data.length-1;
+        var n = 1;
+        for(var i=len;i>-1;i--){
             str += '<li>第'+ n +'名:'+ data[i][0] +'空气质量:<b>'+ data[i][1] +'</b>';
+            n++;
         }
         oresort.innerHTML = str;
     }
