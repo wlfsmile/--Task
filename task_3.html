@@ -34,19 +34,21 @@
      * 返回一个数组，格式见函数中示例
      */
     var oSource = document.getElementById("source");
+    var oli = oSource.getElementsByTagName("li");
+    var ob = oSource.getElementsByTagName("b");
+    var olen = oli.length;
     var oresort = document.getElementById("resort");
     var obtn = document.getElementById("sort-btn");
     function getData() {
-        var data;
-        data = [
-            ["北京", 90],
-            ["上海", 70],
-            ["天津", 80],
-            ["广州", 50],
-            ["深圳", 40],
-            ["福州", 32],
-            ["成都", 90]
-        ];
+        var cityName = '';
+        var num = '';
+        var data=[];
+        for(var i=0;i<olen;i++){
+            var children = oli[i].childNodes;
+            cityName = children[0].nodeValue.slice(0,2), //获取到地区
+            num = parseInt(ob[i].innerHTML); //转化为数字类型才能进行sort方法
+            data.push([cityName,num]);
+        }
         return data;
     }
     /**
@@ -55,7 +57,7 @@
      * 返回一个排序后的数组
      */
     function sortAqiData(data) {
-        data.sort((a,b) => a[1] - b[1] ? -1 : 1);
+        data.sort((a, b) => a[1] - b[1] ? -1 : 1);
         return data;
     }
 
