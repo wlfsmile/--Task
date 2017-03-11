@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        li{
+            list-style: none;
+        }
+    </style>
+</head>
+<body>
+    <h3>城市污染列表</h3>
+    <ul id="aqi-list">
+
+    </ul>
+<script>
+    var aqiData = [
+        ["北京", 90],
+        ["上海", 50],
+        ["福州", 10],
+        ["广州", 50],
+        ["成都", 90],
+        ["西安", 100]
+    ];
+// 看教程之前
+    /*(function () {
+        var olist = document.getElementById("aqi-list");
+        var str = '';
+        for(var i=0; i<aqiData.length; i++){
+            if(aqiData[i][1]>60){
+                str += '<li>'+ aqiData[i][0] +'</li>';
+            }
+        }
+        olist.innerHTML = str;
+    })();*/
+//看完之后
+    (function () {
+        var olist = document.getElementById("aqi-list");
+        var str = '';
+        var len = aqiData.length;
+        var aqiNumber = [];
+        for(var i=0;i<len;i++){
+            if(aqiData[i][1]>60){
+                aqiNumber.push(aqiData[i]);
+            }
+        }
+        aqiNumber.sort((a, b) => a[1] - b[1] ? 1 : -1);
+        var len1 = aqiNumber.length;
+        for(var j=0;j<len1;j++){
+            var m = j+1;
+            str += '<li>第'+ m +'名:'+ aqiNumber[j][0] +','+ aqiNumber[j][1] +'</li>';
+        }
+        olist.innerHTML = str;
+    })();
+</script>
+</body>
+</html>
