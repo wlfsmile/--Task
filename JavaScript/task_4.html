@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <style>
+        input{
+            float: left;
+            margin-left: 20px;
+        }
+        #num li{
+            list-style: none;
+            float: left;
+            padding: 10px;
+            background-color: brown;
+            color: #fff;
+            font-family: "微软雅黑";
+            margin-right: 20px;
+        }
+        .clearfix:after{
+            content:".";
+            display:block;
+            height:0;
+            font-size:0;
+            clear:both;
+            visibility:hidden;
+        }
+        .clearfix{
+            zoom:1
+        }
+    </style>
+    <title>task4</title>
+</head>
+<body>
+    <div class="clearfix">
+        <input type="text" name="text" id="text">
+        <input type="button" value="左侧入" id="leftInto">
+        <input type="button" value="右侧入" id="rightInto">
+        <input type="button" value="左侧出" id="leftOut">
+        <input type="button" value="右侧出" id="rightOut">
+    </div>
+    <div>
+        <ul id="num" class="clearfix">
+            <li>10</li>
+            <li>10</li>
+            <li>10</li>
+            <li>10</li>
+            <li>10</li>
+            <li>10</li>
+        </ul>
+    </div>
+<script>
+    var text = document.getElementById("text");
+    var leftInto = document.getElementById("leftInto");
+    var rightInto = document.getElementById("rightInto");
+    var leftOut = document.getElementById("leftOut");
+    var rightOut = document.getElementById("rightOut");
+    var onum = document.getElementById("num");
+    var oli = onum.getElementsByTagName("li");
+    var num = [];
+    var len = oli.length;
+    var numValue = '';
+    for(var i=0;i<len;i++){
+        numValue = parseInt(oli[i].innerText);
+        num.push(numValue);
+    }
+    function p() {
+        var str = '';
+        for(var i=0;i<num.length;i++){
+            str += '<li>'+ num[i] +'</li>';
+        }
+        onum.innerHTML = str;
+        text.value    = '';
+    }
+
+    leftInto.onclick = function () {
+        var otext = document.getElementById("text").value;
+        num.unshift(parseInt(otext));
+        p();
+    }
+    rightInto.onclick = function () {
+        var otext = document.getElementById("text").value;
+        num.push(parseInt(otext));
+        p();
+    }
+    leftOut.onclick = function () {
+        var item = num.shift();
+        p();
+        alert(item);
+    }
+    rightOut.onclick = function () {
+        var item = num.pop();
+        p();
+        alert(item);
+    }
+</script>
+</body>
+</html>
