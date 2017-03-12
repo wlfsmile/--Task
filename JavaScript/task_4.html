@@ -80,23 +80,40 @@
     //四个点击事件
     leftInto.onclick = function () {
         var otext = document.getElementById("text").value;
-        num.unshift(parseInt(otext));
-        p();
+        if(otext == ''){
+            alert("请输入数字！");
+        }else{
+            num.unshift(parseInt(otext));
+            p();
+        }
+
     }
     rightInto.onclick = function () {
         var otext = document.getElementById("text").value;
-        num.push(parseInt(otext));
-        p();
+        if(otext == ''){
+            alert("请输入数字！");
+        }else {
+            num.push(parseInt(otext));
+            p();
+        }
     }
     leftOut.onclick = function () {
-        var item = num.shift();
-        p();
-        alert(item);
+        if(num == ''){
+            alert("已经没有数字了")
+        }else{
+            var item = num.shift();
+            p();
+            alert(item);
+        }
     }
     rightOut.onclick = function () {
-        var item = num.pop();
-        p();
-        alert(item);
+        if(num == ''){
+            alert("已经没有数字了")
+        }else {
+            var item = num.pop();
+            p();
+            alert(item);
+        }
     }
 </script>
 </body>
