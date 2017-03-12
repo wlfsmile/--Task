@@ -18,6 +18,7 @@
             color: #fff;
             font-family: "微软雅黑";
             margin-right: 20px;
+            cursor: pointer;
         }
         .clearfix:after{
             content:".";
@@ -44,11 +45,11 @@
 <div>
     <ul id="num" class="clearfix">
         <li>10</li>
-        <li>10</li>
-        <li>10</li>
-        <li>10</li>
-        <li>10</li>
-        <li>10</li>
+        <li>9</li>
+        <li>8</li>
+        <li>7</li>
+        <li>6</li>
+        <li>5</li>
     </ul>
 </div>
 <script>
@@ -64,9 +65,33 @@
     var len = oli.length;
     var numValue = '';
     //一个for循环，先将页面中有的数值推入一个数组中
-    for(var i=0;i<len;i++){
-        numValue = parseInt(oli[i].innerText);
-        num.push(numValue);
+    function show() {
+        var oli = onum.getElementsByTagName("li");
+        for(let i=0;i<len;i++){
+            numValue = parseInt(oli[i].innerText);
+            num.push(numValue);
+        }
+    }
+    show();
+    del();
+    //点击任一元素，删除函数
+    function del() {
+        for(let m=0;m<num.length;m++){
+            oli[m].onclick = function (e) {
+                //删除当前li标签
+                var tar = e.target;
+                onum.removeChild(tar);
+                //重新获取到删除后的所有li标签
+                var oli = onum.getElementsByTagName("li");
+                var len1 = oli.length;
+                //重置数组num，为当前页面显示的li标签的数值集合
+                num = [];
+                for(let i=0;i<len1;i++){
+                    numValue = parseInt(oli[i].innerText);
+                    num.push(numValue);
+                }
+            }
+        }
     }
     //一个公共函数，每次都会根据不同的推入数，展现不同数量的标签
     function p() {
@@ -75,7 +100,7 @@
             str += '<li>'+ num[i] +'</li>';
         }
         onum.innerHTML = str;
-        text.value    = '';
+        text.value = '';
     }
     //四个点击事件
     leftInto.onclick = function () {
@@ -85,6 +110,7 @@
         }else{
             num.unshift(parseInt(otext));
             p();
+            del();
         }
     }
     rightInto.onclick = function () {
@@ -94,6 +120,7 @@
         }else {
             num.push(parseInt(otext));
             p();
+            del();
         }
     }
     leftOut.onclick = function () {
@@ -102,6 +129,7 @@
         }else{
             var item = num.shift();
             p();
+            del();
             alert(item);
         }
     }
@@ -111,6 +139,7 @@
         }else {
             var item = num.pop();
             p();
+            del();
             alert(item);
         }
     }
