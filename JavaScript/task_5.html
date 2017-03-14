@@ -11,16 +11,22 @@
             float: left;
             margin-left: 20px;
         }
+        #num{
+            margin-top: 200px;
+        }
         #num li{
             list-style: none;
-            float: left;
-            width: 20px;
+            width: 30px;
             background-color: brown;
             color: #fff;
             font-family: "微软雅黑";
             margin-right: 2px;
             cursor: pointer;
             text-align: center;
+            float: left;
+            vertical-align: bottom;
+            margin-top: 10px;
+            display: inline-block;
         }
         .clearfix:after{
             content:".";
@@ -42,15 +48,16 @@
     <input type="button" value="右侧入" id="rightInto">
     <input type="button" value="左侧出" id="leftOut">
     <input type="button" value="右侧出" id="rightOut">
+    <input type="button" value="排序" id="order">
 </div>
 <div>
     <ul id="num" class="clearfix">
-        <li>10</li>
-        <li>9</li>
-        <li>8</li>
-        <li>7</li>
-        <li>6</li>
-        <li>5</li>
+        <li>50</li>
+        <li>60</li>
+        <li>70</li>
+        <li>80</li>
+        <li>90</li>
+        <li>100</li>
     </ul>
 </div>
 <script>
@@ -67,14 +74,74 @@
     //一个for循环，先将页面中有的数值推入一个数组中
     function show() {
         var oli = onum.getElementsByTagName("li");
-        for(var i=0;i<len;i++){
+        for(let i=0;i<len;i++){
             numValue = parseInt(oli[i].innerText);
             num.push(numValue);
         }
     }
     show();
 
-    
+    //一个公共函数，每次都会根据不同的推入数，展现不同数量的标签
+    function p(data) {
+        var str = '';
+        for(let i=0;i<data.length;i++){
+            str += '<li>'+ data[i] +'</li>';
+        }
+        onum.innerHTML = str;
+        text.value = '';
+    }
+    p(num);
+    //确定li的高度
+    function height() {
+        for(let i=0;i<num.length;i++){
+            var ali = onum.getElementsByTagName("li");
+            ali[i].style.height = num[i]*2 + 'px';
+            ali[i].style.marginTop = (num[0]-num[i])*2 + 'px';
+        }
+    }
+
+    height() ;
+    //四个点击事件
+    leftInto.onclick = function () {
+        var otext = document.getElementById("text").value;
+        if(otext == ''){
+            alert("请输入数字！");
+        }else{
+            num.unshift(parseInt(otext));
+            p(num);
+            height();
+        }
+    }
+    rightInto.onclick = function () {
+        var otext = document.getElementById("text").value;
+        if(otext == ''){
+            alert("请输入数字！");
+        }else {
+            num.push(parseInt(otext));
+            p(num);
+            height();
+        }
+    }
+    leftOut.onclick = function () {
+        if(num == ''){
+            alert("已经没有数字了")
+        }else{
+            var item = num.shift();
+            p(num);
+            height();
+            alert(item);
+        }
+    }
+    rightOut.onclick = function () {
+        if(num == ''){
+            alert("已经没有数字了")
+        }else {
+            var item = num.pop();
+            p(num);
+            height();
+            alert(item);
+        }
+    }
 </script>
 </body>
 </html>
