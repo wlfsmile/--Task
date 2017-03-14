@@ -12,7 +12,8 @@
             margin-left: 20px;
         }
         #num{
-            margin-top: 200px;
+            position: relative;
+            top: 50px;
         }
         #num li{
             list-style: none;
@@ -52,12 +53,12 @@
 </div>
 <div>
     <ul id="num" class="clearfix">
-        <li>50</li>
+        <!--<li>50</li>
         <li>60</li>
         <li>70</li>
         <li>80</li>
         <li>90</li>
-        <li>100</li>
+        <li>100</li>-->
     </ul>
 </div>
 <script>
@@ -67,19 +68,19 @@
     var leftOut = document.getElementById("leftOut");
     var rightOut = document.getElementById("rightOut");
     var onum = document.getElementById("num");
-    var oli = onum.getElementsByTagName("li");
+    var order = document.getElementById("order");
     var num = [];
-    var len = oli.length;
+//    var len = oli.length;
     var numValue = '';
     //一个for循环，先将页面中有的数值推入一个数组中
-    function show() {
+    /*function show() {
         var oli = onum.getElementsByTagName("li");
         for(let i=0;i<len;i++){
             numValue = parseInt(oli[i].innerText);
             num.push(numValue);
         }
     }
-    show();
+    show();*/
 
     //一个公共函数，每次都会根据不同的推入数，展现不同数量的标签
     function p(data) {
@@ -96,30 +97,38 @@
         for(let i=0;i<num.length;i++){
             var ali = onum.getElementsByTagName("li");
             ali[i].style.height = num[i]*2 + 'px';
-            ali[i].style.marginTop = (num[0]-num[i])*2 + 'px';
+            ali[i].style.marginTop = (100-num[i])*2 + 'px';
         }
     }
+    height();
 
-    height() ;
     //四个点击事件
     leftInto.onclick = function () {
         var otext = document.getElementById("text").value;
-        if(otext == ''){
-            alert("请输入数字！");
+        if(otext<10 || otext>100){
+            alert("请输入10~100的数字");
         }else{
-            num.unshift(parseInt(otext));
-            p(num);
-            height();
+            if(otext == ''){
+                alert("请输入数字！");
+            }else{
+                num.unshift(parseInt(otext));
+                p(num);
+                height();
+            }
         }
     }
     rightInto.onclick = function () {
         var otext = document.getElementById("text").value;
-        if(otext == ''){
-            alert("请输入数字！");
-        }else {
-            num.push(parseInt(otext));
-            p(num);
-            height();
+        if(otext<10 || otext>100){
+            alert("请输入10~100的数字");
+        }else{
+            if(otext == ''){
+                alert("请输入数字！");
+            }else {
+                num.push(parseInt(otext));
+                p(num);
+                height();
+            }
         }
     }
     leftOut.onclick = function () {
@@ -141,6 +150,24 @@
             height();
             alert(item);
         }
+    }
+
+    //点击排序
+    order.onclick = function () {
+        num = [];
+        var oli = onum.getElementsByTagName("li");
+        var len = oli.length;
+        for(let i=0;i<len;i++){
+            numValue = parseInt(oli[i].innerText);
+            num.push(numValue);
+        }
+        console.log(num);
+        num.sort(function(a, b) {
+            return a - b;
+        });
+        console.log(num);
+        p(num);
+        height();
     }
 </script>
 </body>
