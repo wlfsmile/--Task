@@ -1,0 +1,174 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>task6</title>
+    <style>
+        input,textarea{
+            float: left;
+            margin-left: 20px;
+        }
+        #num li{
+            list-style: none;
+            float: left;
+            padding: 10px;
+            background-color: brown;
+            color: #fff;
+            font-family: "微软雅黑";
+            margin-right: 20px;
+            cursor: pointer;
+        }
+        .clearfix:after{
+            content:".";
+            display:block;
+            height:0;
+            font-size:0;
+            clear:both;
+            visibility:hidden;
+        }
+        .clearfix{
+            zoom:1
+        }
+    </style>
+</head>
+<body>
+<div class="clearfix">
+    <textarea type="text" name="text" id="text"></textarea>
+    <input type="button" value="左侧入" id="leftInto">
+    <input type="button" value="右侧入" id="rightInto">
+    <input type="button" value="左侧出" id="leftOut">
+    <input type="button" value="右侧出" id="rightOut">
+    <input type="button" value="查询" id="search">
+</div>
+<div>
+    <ul id="num" class="clearfix">
+        <!--<li>10</li>-->
+        <!--<li>9</li>-->
+        <!--<li>8</li>-->
+        <!--<li>7</li>-->
+        <!--<li>6</li>-->
+        <!--<li>5</li>-->
+    </ul>
+</div>
+<script>
+    var text = document.getElementById("text");
+    var leftInto = document.getElementById("leftInto");
+    var rightInto = document.getElementById("rightInto");
+    var leftOut = document.getElementById("leftOut");
+    var rightOut = document.getElementById("rightOut");
+    var onum = document.getElementById("num");
+    var oli = onum.getElementsByTagName("li");
+    var num = [];
+    var oserach = document.getElementById("search");
+    var len = oli.length;
+    var numValue = '';
+
+    //点击任一元素，删除函数
+    function del() {
+        for(let m=0;m<num.length;m++){
+            oli[m].onclick = function (e) {
+                //删除当前li标签
+                var tar = e.target;
+                onum.removeChild(tar);
+                //重新获取到删除后的所有li标签
+                var oli = onum.getElementsByTagName("li");
+                var len1 = oli.length;
+                //重置数组num，为当前页面显示的li标签的数值集合
+                num = [];
+                for(let i=0;i<len1;i++){
+                    numValue = oli[i].innerText;
+                    num.push(numValue);
+                }
+            }
+        }
+    }
+    //一个公共函数，每次都会根据不同的推入数，展现不同数量的标签
+    function p() {
+        var str = '';
+        for(var i=0;i<num.length;i++){
+            str += '<li>'+ num[i] +'</li>';
+        }
+        onum.innerHTML = str;
+        text.value = '';
+    }
+
+    //四个点击事件
+    leftInto.onclick = function () {
+        var otext = document.getElementById("text").value;
+        if(otext == ''){
+            alert("请输入数字！");
+        }else{
+            var arrWord = otext.split(/[^0-9a-zA-Z\u4e00-\u9fa5]+/);
+            for(var i=0;i<arrWord.length;i++){
+                num.unshift(arrWord[i]);
+            }
+            p();
+            del();
+        }
+    }
+    rightInto.onclick = function () {
+        var otext = document.getElementById("text").value;
+        if(otext == ''){
+            alert("请输入数字！");
+        }else {
+            var arrWord = otext.split(/[^0-9a-zA-Z\u4e00-\u9fa5]+/);
+            for(var i=0;i<arrWord.length;i++){
+                num.unshift(arrWord[i]);
+            }
+            p();
+            del();
+        }
+    }
+    leftOut.onclick = function () {
+        if(num == ''){
+            alert("已经没有数字了")
+        }else{
+            var item = num.shift();
+            p();
+            del();
+            alert(item);
+        }
+    }
+    rightOut.onclick = function () {
+        if(num == ''){
+            alert("已经没有数字了")
+        }else {
+            var item = num.pop();
+            p();
+            del();
+            alert(item);
+        }
+    }
+    
+    //点击查询
+    oserach.onclick = function () {
+        var otext = document.getElementById("text");
+        var oli = onum.getElementsByTagName("li");
+        var he = [];
+        if(otext.value == ""){
+            alert("请输入查询字符串");
+        }else{
+            //找到匹配的i项
+            for(var i =0;i<num.length;i++){
+                if(num[i].indexOf(otext.value)>-1){
+                    he.push(i);
+                }
+            }
+            if(he.length == 0){
+                alert("没有匹配项");
+            }else{
+                //匹配的项背景变色
+                for(var j=0;j<he.length;j++){
+                    var m = he[j];
+                    oli[m].style.backgroundColor = "blue";
+                }
+                otext.value = "";
+            }
+        }
+    }
+</script>
+</body>
+</html>
