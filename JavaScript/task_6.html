@@ -116,7 +116,7 @@
         }else {
             var arrWord = otext.split(/[^0-9a-zA-Z\u4e00-\u9fa5]+/);
             for(var i=0;i<arrWord.length;i++){
-                num.unshift(arrWord[i]);
+                num.push(arrWord[i]);
             }
             p();
             del();
